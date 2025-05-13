@@ -6,10 +6,6 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - Numpad Layout: Numeric keypad arranged like a typical calculator, including 0–9, ., =, and basic operators (+, -, *, /).
 - Calculation History: A slide-up panel that records past expressions and results. Click any entry to reload it into the calculator.
 - Copy to Clipboard: Click the copy icon in the result display to copy the latest answer.
-- Unit Converter: Inline conversion of your result into common units: 
-    - Centimeters to inches (cm → in). 
-    - Kilograms to pounds (kg → lb). 
-    - Celsius to Fahrenheit (°C → °F).
 - Keyboard Support: 
     - 0–9 . % ( ) + - * / keys map to calculator keys. 
     - Enter → =.
@@ -18,8 +14,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - Theme Switcher & OS Sync:
     - Built-in dropdown to choose Light, Dark, Blue, or System theme.
     - When set to System, syncs with the user's prefers-color-scheme media query.
-
-h or ? → opens Help dialog.
+- Unit Converter: Inline conversion of your result into common units: 
+    - Centimeters to inches (cm → in). 
+    - Kilograms to pounds (kg → lb). 
+    - Celsius to Fahrenheit (°C → °F).
 
 ## Getting Started
 
