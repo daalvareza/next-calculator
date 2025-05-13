@@ -37,6 +37,30 @@
   --btn-equal: #059669;
 }
 
+@keyframes moveUp {
+  0% {
+    transform: translateY(0) scaleY(1.2);
+  }
+
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+.move-up {
+  animation: moveUp 0.3s ease-out forwards;
+  transform-origin: center bottom;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 html {
   background: var(--bg);
   color: var(--fg);
