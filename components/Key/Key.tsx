@@ -1,21 +1,17 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 interface KeyProps {
     label: string
     onClick: (lbl: string) => void
 }
 
-export default function Key({ label, onClick }: KeyProps) {
+export default function Key({label, onClick }: KeyProps) {
     let bgVar: string
-    if (label === 'C') {
-        bgVar = 'var(--btn-clear)'
-    } else if (label === '=') {
-        bgVar = 'var(--btn-equal)'
-    } else if (/^[0-9.]$/.test(label)) {
-        bgVar = 'var(--btn-num)'
-    } else {
-        bgVar = 'var(--btn-op)'
-    }
+    if (label === 'C') bgVar = 'var(--btn-clear)'
+    else if (label === '=') bgVar = 'var(--btn-equal)'
+    else if (/^[0-9.]$/.test(label)) bgVar = 'var(--btn-num)'
+    else bgVar = 'var(--btn-op)'
+
     return (
         <button
             data-testid={`key-${label}`}

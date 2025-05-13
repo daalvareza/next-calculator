@@ -1,11 +1,11 @@
 import Key from '../Key/Key'
 
 const keys = [
-    'C', '()', '%', '/',    // row 1
+    'C', '()', '%', '/',   // row 1
     '7', '8', '9', '*',    // row 2
     '4', '5', '6', '-',    // row 3
     '1', '2', '3', '+',    // row 4
-    '+/-', '0', '.', '='      // row 5
+    '+/-', '0', '.', '='   // row 5
 ]
 
 interface KeypadProps {

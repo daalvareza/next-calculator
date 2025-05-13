@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import Display from '../Display/Display'
 import Keypad from '../Keypad/Keypad'
+import UnitConverter from '../UnitConverter/UnitConverter'
+import HistoryPanel from '../HistoryPanel/HistoryPanel'
+import HelpModal from '../HelpModal/HelpModal'
 
 export default function Calculator() {
     const [expr, setExpr] = useState('')
@@ -8,6 +11,9 @@ export default function Calculator() {
     const [animate, setAnimate] = useState(false)
     const [justEvaluated, setJustEvaluated] = useState(false)
     const [transfer, setTransfer] = useState(false)
+    const [history, setHistory] = useState<{ expr: string; result: string }[]>([])
+    const [histOpen, setHistOpen] = useState(false)
+    const [helpOpen, setHelpOpen] = useState(false)
 
     function handleInput(k: string) {
         // If we just hit "=", catch the next keypress to transfer the result
@@ -33,8 +39,17 @@ export default function Calculator() {
 
         // Sign toggle
         if (k === '+/-') {
-            // Start a negative number: append "(-"
-            setExpr(prev => prev + '(-')
+            // If expression ends in a number or ')', wrap that chunk in (- … )
+            if (/\d$/.test(expr) || expr.endsWith(')')) {
+                // capture last number or parenthesized group
+                const updated = expr.replace(/(\d+\.?\d*|\))$/, match =>
+                    `(-${match})`
+                )
+                setExpr(updated)
+            } else {
+                // otherwise begin a negative number
+                setExpr(prev => prev + '(-')
+            }
             return
         }
 
@@ -54,6 +69,7 @@ export default function Calculator() {
 
         // Evaluate
         if (k === '=') {
+            if (!expr) return
             // Auto-close parentheses
             const openCount = (expr.match(/\(/g) || []).length
             const closeCount = (expr.match(/\)/g) || []).length
@@ -66,6 +82,7 @@ export default function Calculator() {
             try {
                 const res = eval(sanitized)
                 setResult(String(res))
+                setHistory(h => [{ expr: balanced, result: String(res) }, ...h]);
             } catch {
                 setResult('Error')
             }
@@ -110,6 +127,10 @@ export default function Calculator() {
                 e.preventDefault()
                 handleInput('C')
             }
+            else if (k === 'h' || k === '?') {
+                e.preventDefault();
+                setHelpOpen(!helpOpen)
+            }
         }
 
         window.addEventListener('keydown', handler)
@@ -119,7 +140,32 @@ export default function Calculator() {
     return (
         <div className="w-sm mx-auto mt-20 p-4 bg-[var(--btn-default)] rounded-lg shadow-lg overflow-x-hidden">
             <Display expression={expr} result={result} animate={animate} transfer={transfer} />
+            <UnitConverter result={result} />
             <Keypad onInput={handleInput} />
+            <div className="mt-4 flex items-center justify-between">
+                <button
+                    onClick={() => setHistOpen(!histOpen)}
+                    className="mt-4 px-4 py-2 bg-[var(--btn-num)] rounded"
+                >
+                    History
+                </button>
+                <button
+                    onClick={() => setHelpOpen(true)}
+                    aria-label="Help"
+                    className="mt-4 w-8 h-8 flex items-center justify-center bg-[var(--btn-num)] rounded-full"
+                >
+                    ?
+                </button>
+            </div>
+            {histOpen && (
+                <HistoryPanel
+                    history={history}
+                    onSelect={h => { setExpr(h.result); setHistOpen(false); }}
+                    open={histOpen}
+                    onClose={() => setHistOpen(false)}
+                />
+            )}
+            {helpOpen && <HelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />}
         </div>
     )
 }
