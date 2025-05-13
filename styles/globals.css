@@ -1,42 +1,47 @@
+@import "tailwindcss";
+
+/* calculator & button colors */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #ffffff;
+  --fg: #111111;
+  --btn-default: #e5e7eb;
+  --btn-num: #d1d5db;
+  --btn-op: #fbbf24;
+  --screen-bg: #f3f4f6;
+  --fg-secondary: #6b7280;
+  --btn-clear: #ef4444;
+  --btn-equal: #10b981;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="dark"] {
+  --bg: #111827;
+  --fg: #f9fafb;
+  --btn-default: #374151;
+  --btn-num: #4b5563;
+  --btn-op: #f59e0b;
+  --screen-bg: #1f2937;
+  --fg-secondary: #9ca3af;
+  --btn-clear: #b91c1c;
+  --btn-equal: #047857;
 }
 
-html,
+[data-theme="blue"] {
+  --bg: #eff6ff;
+  --fg: #1e3a8a;
+  --btn-default: #bfdbfe;
+  --btn-num: #93c5fd;
+  --btn-op: #fbbf24;
+  --screen-bg: #dbeafe;
+  --fg-secondary: #3b82f6;
+  --btn-clear: #dc2626;
+  --btn-equal: #059669;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+}
+
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+  @apply min-h-screen flex items-center justify-center;
 }
