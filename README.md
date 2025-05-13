@@ -1,4 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+### Calculator
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app), enhanced into a full-featured, responsive, and accessible calculator application.
+
+## Features
+- Numpad Layout: Numeric keypad arranged like a typical calculator, including 0–9, ., =, and basic operators (+, -, *, /).
+- Calculation History: A slide-up panel that records past expressions and results. Click any entry to reload it into the calculator.
+- Copy to Clipboard: Click the copy icon in the result display to copy the latest answer.
+- Unit Converter: Inline conversion of your result into common units: 
+    - Centimeters to inches (cm → in). 
+    - Kilograms to pounds (kg → lb). 
+    - Celsius to Fahrenheit (°C → °F).
+- Keyboard Support: 
+    - 0–9 . % ( ) + - * / keys map to calculator keys. 
+    - Enter → =.
+    - Backspace / Escape → C (clear)
+    - h or ? → opens Help dialog.
+- Theme Switcher & OS Sync:
+    - Built-in dropdown to choose Light, Dark, Blue, or System theme.
+    - When set to System, syncs with the user's prefers-color-scheme media query.
+
+h or ? → opens Help dialog.
 
 ## Getting Started
 
@@ -14,15 +35,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the project.
 
 ## Learn More
 
