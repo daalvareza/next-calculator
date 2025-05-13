@@ -12,8 +12,8 @@ export default function UnitConverter({ result }: { result: string }) {
 
     return (
         <div
-            className="my-2 min-h-[1.25rem] flex justify-center items-center
-                    text-sm text-[var(--fg-secondary)] whitespace-nowrap"
+            className="my-2 min-h-[1.25rem] flex flex-wrap justify-center items-center 
+                    gap-x-2 gap-y-1 text-sm text-[var(--fg-secondary)]"
         >
             {hasResult &&
                 converters.map((c, i) => {
