@@ -33,6 +33,32 @@ describe('evaluateExpression', () => {
         expect(() => evaluateExpression('abc')).toThrow('Invalid expression')
         expect(() => evaluateExpression('2++2')).toThrow()
     })
+
+    it('handles unary minus at the start', () => {
+        expect(evaluateExpression('-5+2')).toBe(-3)
+    })
+
+    it('handles unary minus after an operator', () => {
+        expect(evaluateExpression('2*-3')).toBe(-6)
+    })
+
+    it('handles nested unary minus in parentheses', () => {
+        expect(evaluateExpression('(-1)+(-2)')).toBe(-3)
+        expect(evaluateExpression('(-(-3))')).toBe(3)
+    })
+
+    it('handles negative decimals', () => {
+        expect(evaluateExpression('-0.5*2')).toBe(-1)
+    })
+
+    it('throws on division by zero', () => {
+        expect(() => evaluateExpression('5/0')).toThrow('Division by zero')
+    })
+
+    it('throws on consecutive operators', () => {
+        expect(() => evaluateExpression('5--3')).not.toThrow(/consecutive operators/i)
+        expect(() => evaluateExpression('2++2')).toThrow(/consecutive operators/i)
+    })
 })
 
 describe('stripLeadingZeros', () => {

@@ -26,6 +26,18 @@ export function evaluateExpression(input: string): number {
 
     // Shunting-Yard: convert infix tokens to RPN queue
     for (const token of tokenList) {
+        // Unary minus
+        if (
+            token === '-' &&
+            (previousToken === null || previousToken === '(' || previousToken in operatorPrecedence)
+        ) {
+            // Emit a 0, then treat “–” as a normal operator
+            rpnQueue.push('0')
+            operatorStack.push('-')
+            previousToken = token
+            continue
+        }
+
         // Reject consecutive operators
         if (
             previousToken !== null &&
@@ -34,6 +46,7 @@ export function evaluateExpression(input: string): number {
         ) {
             throw new Error("Invalid expression: consecutive operators.")
         }
+
         if (!isNaN(+token)) {
             // If token is a number, push straight to the output queue
             rpnQueue.push(token)
@@ -71,10 +84,11 @@ export function evaluateExpression(input: string): number {
     while (operatorStack.length > 0) {
         rpnQueue.push(operatorStack.pop()!)
     }
+    const cleaned = rpnQueue.filter(tok => tok !== "(" && tok !== ")")
 
     // Evaluate the RPN expression
     const evaluationStack: number[] = []
-    for (const token of rpnQueue) {
+    for (const token of cleaned) {
         if (!isNaN(+token)) {
             // Push numbers onto the stack
             evaluationStack.push(+token)
@@ -94,6 +108,7 @@ export function evaluateExpression(input: string): number {
                     computed = left * right
                     break
                 case '/':
+                    if (right === 0) throw new Error("Division by zero")
                     computed = left / right
                     break
                 default:
@@ -116,20 +131,20 @@ export function stripLeadingZeros(expr: string): string {
         let sign = ""
         let num = match
 
-        // pull off leading "-" if present
+        // Pull off leading "-" if present
         if (num[0] === "-") {
             sign = "-"
             num = num.slice(1)
         }
 
         if (num.includes(".")) {
-            // decimal: split integer vs fraction
+            // Decimal: split integer vs fraction
             const [intPart, fracPart] = num.split(".", 2)
-            // strip leading zeros, but leave a single "0" if it becomes empty
+            // Strip leading zeros, but leave a single "0" if it becomes empty
             let cleanInt = intPart.replace(/^0+/, "") || "0"
             return sign + cleanInt + "." + fracPart
         } else {
-            // pure integer: strip all leading zeros, fallback to "0"
+            // Pure integer: strip all leading zeros, fallback to "0"
             let cleanInt = num.replace(/^0+/, "") || "0"
             return sign + cleanInt
         }
