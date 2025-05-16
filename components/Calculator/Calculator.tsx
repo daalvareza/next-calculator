@@ -4,16 +4,7 @@ import Keypad from '../Keypad/Keypad'
 import UnitConverter from '../UnitConverter/UnitConverter'
 import HistoryPanel from '../HistoryPanel/HistoryPanel'
 import HelpModal from '../HelpModal/HelpModal'
-
-function stripLeadingZeros(expr: string): string {
-    // Handle plain zeros: "0000" → "0"
-    if (/^0+$/.test(expr)) return "0"
-    // Remove leading zeros before a non-zero digit: "000123" → "123"
-    expr = expr.replace(/(^|\D)0+([1-9])/g, "$1$2")
-    // For decimals like "000.5" → "0.5"
-    expr = expr.replace(/(^|\D)0+(?=\.)/g, "$10")
-    return expr
-}
+import { evaluateExpression, stripLeadingZeros } from '@/utils/helpers/helpers'
 
 export default function Calculator() {
     const [expr, setExpr] = useState('')
@@ -97,7 +88,7 @@ export default function Calculator() {
             // Before evaluating, convert every "%" into "/100"
             const sanitized = balanced.replace(/%/g, '/100')
             try {
-                const res = eval(sanitized)
+                const res = evaluateExpression(sanitized)
                 setResult(String(res))
                 setHistory(h => [{ expr: balanced, result: String(res) }, ...h]);
             } catch {

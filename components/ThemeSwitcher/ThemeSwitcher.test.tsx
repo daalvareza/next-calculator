@@ -24,13 +24,15 @@ describe('ThemeSwitcher', () => {
         expect(select).toHaveValue('light')
 
         const options = screen.getAllByRole('option')
-        expect(options).toHaveLength(3)
+        expect(options).toHaveLength(4)
         expect(options[0]).toHaveValue('light')
         expect(options[0]).toHaveTextContent('Light')
         expect(options[1]).toHaveValue('dark')
         expect(options[1]).toHaveTextContent('Dark')
         expect(options[2]).toHaveValue('blue')
         expect(options[2]).toHaveTextContent('Blue')
+        expect(options[3]).toHaveValue('system')
+        expect(options[3]).toHaveTextContent('System')
     })
 
     it('invokes setTheme when a new theme is selected', async () => {
